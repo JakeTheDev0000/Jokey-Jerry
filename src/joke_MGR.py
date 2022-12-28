@@ -2,6 +2,7 @@ class everyone:
     list_of_people = [
         "immaculata",
         "jake",
+        "beecie",
     ]
 
     def __init__(self):
@@ -57,13 +58,15 @@ class beecie:
             "A man walks into a library and asks the librarian for books about paranoia. She whispers, \"They're right behind you!\"",
             "Want to hear a roof joke? The first one's on the house.",
             "What should you do if you're attacked by a group of clowns? Go straight for the juggler.\nWhy don't koalas count as bears? They don't have the right koalafications.",
-            
+            "A cement mixer and a prison bus crashed on the highway. Police advise citizens to look out for a group of hardened criminals.",
+            "I couldn't figure out why the baseball kept getting bigger. Then it hit me.",
+            "I saw a movie about how ships are put together. It was riveting.",
+            "What happens to a frog's car when it breaks down? It gets toad away."
         ]
-
-
-
-
-# "What do you call a fake noodle? An impasta",
-# "\“Your mother has been with us for 20 years,\” said John. \“Isn’t it time she got a place of her own?\”\n\“My mother?\” replied Helen. \“I thought she was your mother.\”",
-# "Police arrested two kids yesterday, one was drinking battery acid, the other was eating fireworks. They charged one – and let the other one off.",
-# "My therapist says I have a preoccupation with vengeance. We’ll see about that.",
+    
+    def get_joke(self):
+        return self.jokes
+    
+    def get_random_joke(self):
+        import random
+        return random.choice(self.jokes)
