@@ -1,8 +1,11 @@
 class everyone:
     list_of_people = [
+        "everyone",
         "immaculata",
         "jake",
         "beecie",
+        "bon",
+        "ella",
     ]
 
     def __init__(self):
@@ -40,8 +43,10 @@ class jake:
         self.jokes = [
             "joke is right here, or is it?",
             "then he said \" listen here you little shi-\" so i was like ca-pow",
-            "chickens am I right lol",
-            "cows am I right lol",
+            "chickens am I right lol, loves playing **chicken**",
+            "cows am I right lol, being a **cow**ward",
+            "sheep am I right lol, being all **sheepy** and stuff",
+            "Fish am I right? Lol, being all **fishy** and stuff",
             "\"NOW GET A LIFE\" he said at the cematary",
         ]
 
@@ -61,9 +66,46 @@ class beecie:
             "A cement mixer and a prison bus crashed on the highway. Police advise citizens to look out for a group of hardened criminals.",
             "I couldn't figure out why the baseball kept getting bigger. Then it hit me.",
             "I saw a movie about how ships are put together. It was riveting.",
-            "What happens to a frog's car when it breaks down? It gets toad away."
+            "What happens to a frog's car when it breaks down? It gets toad away.",
+            "frogs am I right? Lol",
         ]
     
+    def get_joke(self):
+        return self.jokes
+    
+    def get_random_joke(self):
+        import random
+        return random.choice(self.jokes)
+
+class bon:
+    def __init__(self):
+        self.jokes = [
+            "A chef cooked his beef on the Eiffel Tower, the steaks had never been higher.",
+            "Ladies first? That’s not what Genesis would tell you.",
+            "What happens if you water a Led Zeppelin seed? You grow a Robert Plant.",
+            "I don’t like telling jokes, because people laugh in my face.",
+            "A kid walks up to his dad and asks. \“Daddy what\’s another word for killing yourself?\” And the dad says, \“Well I guess that would be suicide sonny.\” And the kid says \“But you said suicide is never the answer.\”",
+            "I made a joke up on the fly, but sadly I was too big for it, and it had a crash landing.",
+            "I’ll tell another joke when pigs fly, or better yet yo mama.",
+            "Have you ever had that one friend who laughs louder then a Blue Whale’s mating call? And you know you don’t want to make them feel bad, I mean the whole world should be filled with laughter, just usually not all by the same person."
+        ]
+    
+    def get_joke(self):
+        return self.jokes
+    
+    def get_random_joke(self):
+        import random
+        return random.choice(self.jokes)
+
+class ella:
+    def __init__(self):
+        self.jokes = [
+            "What did the custodian say when he jumped out of the closet? \"Supplies!\"",
+            "What does a baby computer call its father?\n\n\nData.",
+            "Why don't oysters donate to charity? Because they're shellfish",
+            "what do sprinters eat before a race? nothing. They fast"
+        ]
+
     def get_joke(self):
         return self.jokes
     
