@@ -1,13 +1,23 @@
+import datetime
 import joke_MGR
 import discord
 import random
 import sys # for args
+import time
 
 import rich # for console and logging
 from rich.console import Console
 
+# experimental
+from time import sleep
+
+from rich.align import Align
+from rich.text import Text
+from rich.panel import Panel
 
 
+# CAN ONLT BE RUN ON JAKE'S PC AND ON A LINUX MACHINE (OR A UNIX MACHINE)
+global Token # token is stored in a file called token.txt 
 Token = open("src/token.txt", "r").read()
 # inv link: https://discord.com/api/oauth2/authorize?client_id=1057475979011956738&permissions=515399735360&scope=bot
 
@@ -52,11 +62,16 @@ def main(args):
     @client.event
     async def on_ready():
         print(f'{client.user} has connected to Discord!')
+        print("rich console is initializing...")
+        print("rich console is initialized and ready to use\ntaking over console output now...")
+        time.sleep(0.005)
+        console.print(Align.center(Panel(Text("JOKEY JERRY IS ACTIVATED", style="bold red")), vertical="middle"))
+        console.rule("[bold red]CONNECTED TO DISCORD")
     
     @client.event
     async def on_message(message):
         try:
-            print(message.guild.name + " ||| " + message.channel.name + " ||| " + message.author.name + ": " + message.content)
+            console.log(message.guild.name + " ||| " + message.channel.name + " |||[blue i] " + message.author.name + ":[green bold]" + message.content)
         except AttributeError:
             print("DM ||| " + message.author.name + ": " + message.content)
         except:
@@ -71,10 +86,61 @@ def main(args):
                 pass
             else:
                 return
+        
+        if message.content.startswith('!halt'):
+            if message.author.id == 691877635394895893 or message.author.id == 1000936894500180099:
+                try:
+                    message.content = message.content.replace("!halt ", "")
+                    await message.channel.send("pausing for " + message.content + " seconds\n I will respond to all your commands after that time")
+                    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="the timer go down, " + message.author.name + " halted me"))
+                    with console.screen(style="bold white on blue") as screen:
+                        for count in range(int(message.content), 0, -1):
+                            text = Align.center(
+                                Text.from_markup(f"[blink]TO STOP ME, TERMINATE THE PROGRAM\nHalted for...[/blink]\n{count}", justify="center"),
+                                vertical="middle",
+                            )
+                            screen.update(Panel(text))
+                            sleep(1)
+                        
+                        if JJ_status == 0:
+                            await client.change_presence(activity=discord.Game(name="in normal mode"))
+                        elif JJ_status == 1:
+                            await client.change_presence(activity=discord.Game(name="in inactive mode"))
+                        elif JJ_status == 2:
+                            await client.change_presence(activity=discord.Game(name="in maintenance mode"))
+                        elif JJ_status == 3:
+                            await client.change_presence(activity=discord.Game(name="in debug mode"))
+                        else:
+                            await client.change_presence(activity=discord.Game(name="in unknown mode"))
+                except ValueError:
+                    console.log("[red bold blink i]Error in !halt")
+                    await message.channel.send("Error in !halt, make sure you have a number (sec) after the command")
+
         if message.content.startswith('!poweroff'):
             if message.author.id == 691877635394895893 or message.author.id == 1000936894500180099:
-                await message.channel.send("Powering off...")
+                if JJ_status == 2 or JJ_status == 3:
+                    await message.channel.send("Powering off...")
+                    await message.channel.send("have a good day!\n\nMADE BY JAKE (MESSYCODE) AND IMMACULATA (IMMACULATA RODRIGO)\nTHIS SOFTWARE IS LICENSED UNDER THE MIT LICENSE\nMADE ON DEC 28 2022, AT (ALL DAY)\nVERSION:9999\n")
+                    await message.channel.send("TIME OF SHUTDOWN: " + str(datetime.datetime.now()))
+                else:
+                    await message.channel.send("Goodbye " + message.author.name + "\ndont forget about me...")
+                    await message.channel.send("time of death of instance: " + str(datetime.datetime.now()))
+
+                console.print("[black bold on blue]\n\nhave a good day!\n\nMADE BY JAKE (MESSYCODE) AND IMMACULATA (IMMACULATA RODRIGO)\nTHIS SOFTWARE IS LICENSED UNDER THE MIT LICENSE\nMADE ON DEC 28 2022, AT (ALL DAY)\nVERSION:9999\n", justify="center")
+                console.print("TIME OF SHUTDOWN: " + str(datetime.datetime.now()), justify="center", style="bold red blink on black")
+
+                with console.screen(style="bold white on red") as screen:
+                    for count in range(1000, 0, -1):
+                        text = Align.center(
+                            Text.from_markup(f"[blink]Shutting down in...[/blink]\n{count}", justify="center"),
+                            vertical="middle",
+                        )
+                        screen.update(Panel(text))
+                        sleep(0.00001)
+
+                console.rule("[bold red]DISCONNECTED FROM DISCORD")
                 await client.close()
+                exit()
             else:
                 await message.channel.send("You don't have permission to do that")
                 return
@@ -137,8 +203,37 @@ def main(args):
             else:
                 await message.channel.send("I don't know that person")
                 await message.channel.send("Try 'joke list' to see who I know")
+
+    @client.event
+    async def on_message_delete(message):
+        console.print(f'[red bold blink i]message: \"{message.content}\" by {message.author} was deleted in {message.channel}',justify="center")
     
-    client.run(Token)
+    @client.event
+    async def on_message_edit(message_before, message_after):
+        console.print(f'[blue bold blink i]message: \"{message_before.content}\" by {message_before.author} was edited to \"{message_after.content}\" in {message_after.channel}',justify="center")
+
+    try:
+        global Token
+        client.run(Token)
+        #write token to file src/last_token.txt
+        with open("src/last_token.txt", "w") as f:
+            f.write(Token)
+    except Exception as e:
+        print(e)
+        print("\n\nNOT A VALID TOKEN\nTRYING LAST KNOWN TOKEN\nIF THAT DOESNT WORK, THEN REST THE TOKEN\n")
+        try:
+            with open("src/last_token.txt", "r") as f:
+                Token = f.read()
+
+            try:
+                client.close()
+                client.run(Token)
+                with open("src/token.txt", "w") as f:
+                    f.write(Token)
+            except Exception as e:
+                print("\n\nNOT A VALID LAST KNOWN TOKEN\n"+str(e))
+        except Exception as e:
+            print("NO LAST KNOWN TOKEN FOUND\nPLEASE RESET TOKEN\n"+str(e))
 
 if __name__ == "__main__":
     # arguments:
