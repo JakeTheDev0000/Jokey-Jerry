@@ -112,3 +112,42 @@ class ella:
     def get_random_joke(self):
         import random
         return random.choice(self.jokes)
+
+
+
+
+
+
+
+
+
+
+if __name__ == "__main__":
+    print("This is a module, not a script. Please run src/main.py\n\n")
+    print("This module contains the following classes:")
+    everyone = everyone()
+    for i in everyone.list_of_people:
+        print(i)
+    print("\n")
+    print("This module contains the following functions:")
+    print("[NAME].get_joke()")
+    print("[NAME].get_random_joke()")
+    print("\n")
+    print("heres a random joke from immaculata:")
+    immaculata = immaculata()
+    print(immaculata.get_random_joke())
+    print("\n")
+    print("heres a random joke from jake:")
+    jake = jake()
+    print(jake.get_random_joke())
+    print("\n")
+
+    del jake
+    del immaculata
+    del everyone
+
+    print("have a good day!\n\nMADE BY JAKE (MESSYCODE) AND IMMACULATA (IMMACULATA RODIGO)\nTHIS SOFTWARE IS LICENSED UNDER THE MIT LICENSE\nMADE ON DEC 28 2022, AT (ALL DAY)\nVERSION:9999\n")
+    exit()
+
+
+
