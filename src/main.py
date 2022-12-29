@@ -26,6 +26,7 @@ import discord
 import random
 import sys # for args
 import time
+import os
 
 import rich # for console and logging
 from rich.console import Console
@@ -92,6 +93,7 @@ def main(args):
     
     @client.event
     async def on_message(message):
+
         try:
             console.log(message.guild.name + " ||| " + message.channel.name + " |||[blue i] " + message.author.name + ":[green bold]" + message.content)
         except AttributeError:
@@ -103,12 +105,13 @@ def main(args):
             return
 
         message.content = message.content.lower()
+            
         if JJ_status == 2:
-            if message.content.startswith('!joke status') or message.content.startswith('!joke list') or message.content:
+            if message.content.startswith('!joke') or message.content.startswith('!halt') or message.content.startswith('!poweroff') or message.content.startswith('!shutdown') or message.content.startswith('!restart'):
                 pass
             else:
                 return
-        
+
         if message.content.startswith('!halt'):
             if message.author.id == 691877635394895893 or message.author.id == 1000936894500180099:
                 try:
@@ -137,8 +140,28 @@ def main(args):
                 except ValueError:
                     console.log("[red bold blink i]Error in !halt")
                     await message.channel.send("Error in !halt, make sure you have a number (sec) after the command")
+                except:
+                    console.log("[red bold blink i]Error in !halt")
+                    await message.channel.send("Error in !halt, make sure you have a number (sec) after the command")
 
-        if message.content.startswith('!poweroff'):
+        if message.content.startswith('!restart') or message.content.startswith("!r"):
+            if message.author.id == 691877635394895893 or message.author.id == 1000936894500180099:
+                if JJ_status == 2 or JJ_status == 3:
+                    await message.channel.send("Restarting...")
+                    await message.channel.send("have a good day!\n\nMADE BY JAKE (MESSYCODE) AND IMMACULATA (IMMACULATA RODRIGO)\nTHIS SOFTWARE IS LICENSED UNDER THE MIT LICENSE\nMADE ON DEC 28 2022, AT (ALL DAY)\nVERSION:9999\n")
+                    await message.channel.send("TIME OF RESTART: " + str(datetime.datetime.now()))
+                else:
+                    await message.channel.send("Sending task to restart...\nthis might take 5 seconds to 10")
+                    await message.channel.send("TIME OF RESTART: " + str(datetime.datetime.now()))
+                
+                command = "python3 src/main.py " + str(JJ_status)
+                print(command)
+                os.system(command)
+                exit(0)
+                    
+
+
+        if message.content.startswith('!shutdown') or message.content.startswith('!poweroff'):
             if message.author.id == 691877635394895893 or message.author.id == 1000936894500180099:
                 if JJ_status == 2 or JJ_status == 3:
                     await message.channel.send("Powering off...")
@@ -168,32 +191,39 @@ def main(args):
                 return
         
         if message.content.startswith('!joke status'):
-            if message.author.id != 691877635394895893 or message.author.id != 1000936894500180099:
+            if message.author.id == 691877635394895893 or message.author.id == 1000936894500180099:
+                await message.channel.send("Jokey Jerry status: " + str(JJ_status))
+                if JJ_status == 0:
+                    await message.channel.send("Jokey Jerry is currently active and ready to go")
+                elif JJ_status == 1:
+                    await message.channel.send("Jokey Jerry is currently inactive and will not respond to any commands")
+                elif JJ_status == 2:
+                    await message.channel.send("Jokey Jerry is currently in maintenance mode and will only respond to a few commands")
+                elif JJ_status == 3:
+                    await message.channel.send("Jokey Jerry is currently in debug mode and will only respond to commands ONLY from the developer")
+                else:
+                    await message.channel.send("Jokey Jerry is currently in an unknown state")
+            else:
                 await message.channel.send("You don't have permission to do that")
                 return
-            
-            await message.channel.send("Jokey Jerry status: " + str(JJ_status))
-            if JJ_status == 0:
-                await message.channel.send("Jokey Jerry is currently active and ready to go")
-            elif JJ_status == 1:
-                await message.channel.send("Jokey Jerry is currently inactive and will not respond to any commands")
-            elif JJ_status == 2:
-                await message.channel.send("Jokey Jerry is currently in maintenance mode and will only respond to a few commands")
-            else:
-                await message.channel.send("Jokey Jerry is currently in an unknown state")
 
 
         
         if message.content.startswith('jokey jerry'):
             gif_links = [
                 "https://tenor.com/view/seinfeld-gif-18623119",
-                "https://tenor.com/view/seinfeld-jerry-seinfeld-hello-bang-door-gif-4107955"
+                "https://tenor.com/view/seinfeld-jerry-seinfeld-hello-bang-door-gif-4107955",
+                "https://tenor.com/view/jerry-seinfeld-popcorn-yeah-gif-26383058",
+                "https://tenor.com/view/seinfeld-jerry-seinfeld-glasses-awkward-gif-4195909",
+                "https://tenor.com/view/jerry-seinfeld-i-like-the-way-you-think-gif-14890068",
+                "https://tenor.com/view/yes-seinfeld-truth-buddy-kramer-gif-23789643",
+                "https://tenor.com/view/kramer-seinfeld-kramer-seinfeld-god-help-us-leave-quickly-gif-23488572",
             ]
             await message.channel.send(random.choice(gif_links))
             return
         
         if message.content.startswith('hello') or message.content.startswith('hi') or message.content.startswith('hey') or message.content.startswith('yo ') or message.content.startswith("wassup"):
-            await message.channel.send("Hello " + message.author.name + "!")
+            await message.channel.send("HELLO " + message.author.name + "!")
             return
     
         if message.content.startswith('joke'):

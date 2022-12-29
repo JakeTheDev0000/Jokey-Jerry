@@ -109,7 +109,11 @@ class bon:
             "A kid walks up to his dad and asks. \“Daddy what\’s another word for killing yourself?\” And the dad says, \“Well I guess that would be suicide sonny.\” And the kid says \“But you said suicide is never the answer.\”",
             "I made a joke up on the fly, but sadly I was too big for it, and it had a crash landing.",
             "I’ll tell another joke when pigs fly, or better yet yo mama.",
-            "Have you ever had that one friend who laughs louder then a Blue Whale’s mating call? And you know you don’t want to make them feel bad, I mean the whole world should be filled with laughter, just usually not all by the same person."
+            "Have you ever had that one friend who laughs louder then a Blue Whale’s mating call? And you know you don’t want to make them feel bad, I mean the whole world should be filled with laughter, just usually not all by the same person.",
+            "What did the egg say to the cook? You crack me up.",
+            "Why couldn’t you live without legs? Because you couldn’t stand it.",
+            "I’ve heard people say they wanna get a light Buzz. But from what I’m seeing, they want more then a light buzz. They wanna be like Buzz Lightyear they wanna go to infinity and beyond.",
+            "What happened to the nervous duck? He quaked under pressure.",
         ]
     
     def get_joke(self):
