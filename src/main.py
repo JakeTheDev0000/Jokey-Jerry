@@ -232,10 +232,12 @@ def main(args):
             except IndexError:
                 await message.channel.send("I don't know that person")
                 await message.channel.send("Try 'joke list' to see who I know")
+                await message.channel.send("Or DM jake to add your own jokes")
                 return
             if who == 'list':
                 for person in joke_MGR.everyone.list_of_people:
                     await message.channel.send(person)
+                await message.channel.send("DM jake to add your own jokes")
                 return
 
             elif who == 'everyone':
@@ -255,6 +257,7 @@ def main(args):
             else:
                 await message.channel.send("I don't know that person")
                 await message.channel.send("Try 'joke list' to see who I know")
+                await message.channel.send("Or DM jake to add your own jokes")
 
     @client.event
     async def on_message_delete(message):
